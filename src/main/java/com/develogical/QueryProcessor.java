@@ -10,34 +10,8 @@ public class QueryProcessor {
 
     private static Pattern numberPattern = Pattern.compile("\\d+");
 
-    private static List<Long> getNumbers(String query) {
-        List<Long> numbers = new ArrayList<>();
-        Matcher matcher = numberPattern.matcher(query);
-        while (matcher.find()) {
-            numbers.add(Long.parseLong(matcher.group()));
-        }
-        return numbers;
-    }
-
-    private static boolean isSquare(long l) {
-        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
-            if (i * i == l) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean isCube(long l) {
-        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
-            if (i * i * i == l) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public String process(String query) {
+        query = query.substring(query.indexOf(":") + 1);
         if (query.toLowerCase().contains("shakespeare")) {
             return "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
                     "English poet, playwright, and actor, widely regarded as the greatest " +
@@ -82,5 +56,32 @@ public class QueryProcessor {
             return matching.toString();
         }
         return "";
+    }
+
+    private static List<Long> getNumbers(String query) {
+        List<Long> numbers = new ArrayList<>();
+        Matcher matcher = numberPattern.matcher(query);
+        while (matcher.find()) {
+            numbers.add(Long.parseLong(matcher.group()));
+        }
+        return numbers;
+    }
+
+    private static boolean isSquare(long l) {
+        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
+            if (i * i == l) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isCube(long l) {
+        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
+            if (i * i * i == l) {
+                return true;
+            }
+        }
+        return false;
     }
 }

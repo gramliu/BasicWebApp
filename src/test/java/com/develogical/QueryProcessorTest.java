@@ -40,6 +40,7 @@ public class QueryProcessorTest {
     public void handlesProduct() throws Exception {
         assertThat(queryProcessor.process("what is 2013 times 2018"), containsString(String.valueOf(2013 * 2018)));
         assertThat(queryProcessor.process("what is 2013 multiplied by 2018"), containsString(String.valueOf(2013 * 2018)));
+        assertThat(queryProcessor.process("what is 206 multiplied by 209 "), containsString(String.valueOf(206 * 209)));
     }
 
     @Test
@@ -51,5 +52,10 @@ public class QueryProcessorTest {
     public void handlesSmallest() throws Exception {
         assertThat(queryProcessor.process("which of the following is the smallest: 3, 1, 4, 1234, 0"), containsString("0"));
     }
+
+//    @Test
+//    public void squareAndCube() throws Exception {
+//        assertThat(queryProcessor.process("which of the following is a square and a cube: 961, 904, 1024, 20480"), containsString("1024"));
+//    }
 
 }
