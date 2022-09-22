@@ -22,12 +22,18 @@ public class QueryProcessorTest {
 
     @Test
     public void knowsTeamName() throws Exception {
-        assertThat(queryProcessor.process("what is your name"), containsString("Imperial"));
+        assertThat(queryProcessor.process("what is your name"), containsString("dyno-saur"));
     }
 
     @Test
     public void isNotCaseSensitive() throws Exception {
         assertThat(queryProcessor.process("shakespeare"), containsString("playwright"));
+    }
+
+    @Test
+    public void handlesSum() throws Exception {
+        assertThat(queryProcessor.process("what is 2013 plus 2018"), containsString(String.valueOf(2013 + 2018)));
+        assertThat(queryProcessor.process("what is 2013 + 2018"), containsString(String.valueOf(2013 + 2018)));
     }
 
 }
