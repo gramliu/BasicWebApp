@@ -9,6 +9,15 @@ public class QueryProcessor {
 
     private static Pattern numberPattern = Pattern.compile("\\d+");
 
+    private static List<Long> getNumbers(String query) {
+        List<Long> numbers = new ArrayList<>();
+        Matcher matcher = numberPattern.matcher(query);
+        while (matcher.find()) {
+            numbers.add(Long.parseLong(matcher.group()));
+        }
+        return numbers;
+    }
+
     public String process(String query) {
         if (query.toLowerCase().contains("shakespeare")) {
             return "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -19,14 +28,19 @@ public class QueryProcessor {
             return "dyno-saur";
         }
         if (query.contains("plus") || query.contains("+")) {
-            Matcher matcher = numberPattern.matcher(query);
-            List<Long> numbers = new ArrayList<>();
-            while (matcher.find()) {
-                numbers.add(Long.parseLong(matcher.group()));
-            }
-            System.out.println(numbers);
+            List<Long> numbers = getNumbers(query);
             long sum = numbers.stream().reduce(0L, Long::sum);
             return String.valueOf(sum);
+        }
+        if (query.contains("largest")) {
+            List<Long> numbers = getNumbers(query);
+            long largest = numbers.stream().reduce(Long.MIN_VALUE, Long::max);
+            return String.valueOf(largest);
+        }
+        if (query.contains("smallest")) {
+            List<Long> numbers = getNumbers(query);
+            long smallest = numbers.stream().reduce(Long.MAX_VALUE, Long::min);
+            return String.valueOf(smallest);
         }
         return "";
     }

@@ -36,4 +36,14 @@ public class QueryProcessorTest {
         assertThat(queryProcessor.process("what is 2013 + 2018"), containsString(String.valueOf(2013 + 2018)));
     }
 
+    @Test
+    public void handlesLargest() throws Exception {
+        assertThat(queryProcessor.process("which of the following is the largest: 3, 1, 4, 1234, 0"), containsString("1234"));
+    }
+
+    @Test
+    public void handlesSmallest() throws Exception {
+        assertThat(queryProcessor.process("which of the following is the smallest: 3, 1, 4, 1234, 0"), containsString("0"));
+    }
+
 }
