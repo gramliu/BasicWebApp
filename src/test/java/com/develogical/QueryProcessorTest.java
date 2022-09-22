@@ -37,6 +37,12 @@ public class QueryProcessorTest {
     }
 
     @Test
+    public void handlesProduct() throws Exception {
+        assertThat(queryProcessor.process("what is 2013 times 2018"), containsString(String.valueOf(2013 * 2018)));
+        assertThat(queryProcessor.process("what is 2013 multiplied by 2018"), containsString(String.valueOf(2013 * 2018)));
+    }
+
+    @Test
     public void handlesLargest() throws Exception {
         assertThat(queryProcessor.process("which of the following is the largest: 3, 1, 4, 1234, 0"), containsString("1234"));
     }

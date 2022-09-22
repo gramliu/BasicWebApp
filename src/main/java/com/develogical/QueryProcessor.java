@@ -32,6 +32,21 @@ public class QueryProcessor {
             long sum = numbers.stream().reduce(0L, Long::sum);
             return String.valueOf(sum);
         }
+        if (query.contains("minus") || query.contains("-")) {
+            List<Long> numbers = getNumbers(query);
+            long sum = numbers.stream().reduce(0L, (a, b) -> a - b);
+            return String.valueOf(sum);
+        }
+        if (query.contains("multiplied") || query.contains("times") || query.contains("*")) {
+            List<Long> numbers = getNumbers(query);
+            long sum = numbers.stream().reduce(1L, (a, b) -> a * b);
+            return String.valueOf(sum);
+        }
+        if (query.contains("divided")) {
+            List<Long> numbers = getNumbers(query);
+            long sum = numbers.stream().reduce(1L, (a, b) -> a / b);
+            return String.valueOf(sum);
+        }
         if (query.contains("largest")) {
             List<Long> numbers = getNumbers(query);
             long largest = numbers.stream().reduce(Long.MIN_VALUE, Long::max);
