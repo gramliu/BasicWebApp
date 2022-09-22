@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class QueryProcessor {
 
@@ -16,6 +17,24 @@ public class QueryProcessor {
             numbers.add(Long.parseLong(matcher.group()));
         }
         return numbers;
+    }
+
+    private static boolean isSquare(long l) {
+        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
+            if (i * i == l) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isCube(long l) {
+        for (long i = 0; i < Math.sqrt(l) + 1; i++) {
+            if (i * i * i == l) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String process(String query) {
@@ -56,6 +75,11 @@ public class QueryProcessor {
             List<Long> numbers = getNumbers(query);
             long smallest = numbers.stream().reduce(Long.MAX_VALUE, Long::min);
             return String.valueOf(smallest);
+        }
+        if (query.contains("square and a cube")) {
+            List<Long> numbers = getNumbers(query);
+            List<Long> matching = numbers.stream().filter((a) -> isSquare(a) && isCube(a)).collect(Collectors.toList());
+            return matching.toString();
         }
         return "";
     }
