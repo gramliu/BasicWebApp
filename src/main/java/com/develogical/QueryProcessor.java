@@ -55,6 +55,11 @@ public class QueryProcessor {
             List<Long> matching = numbers.stream().filter((a) -> isSquare(a) && isCube(a)).collect(Collectors.toList());
             return matching.toString();
         }
+        if (query.contains("primes")) {
+            List<Long> numbers = getNumbers(query);
+            List<Long> matching = numbers.stream().filter(QueryProcessor::isPrime).collect(Collectors.toList());
+            return matching.toString();
+        }
         return "";
     }
 
@@ -65,6 +70,17 @@ public class QueryProcessor {
             numbers.add(Long.parseLong(matcher.group()));
         }
         return numbers;
+    }
+
+    private static boolean isPrime(long l) {
+        for (long i = 1; i < Math.sqrt(l) + 1; i++) {
+            for (long j = 1; j < i; j++) {
+                if (i * j == l) {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     private static boolean isSquare(long l) {
